@@ -17,11 +17,8 @@ import qualified Data.Map as M
 
 import XMonad.Hooks.SetWMName
 
-import XMonad.Layout.Fullscreen
-import XMonad.Layout.NoBorders
-
 --Layout
-myLayout = windowNavigation(tiled) ||| Mirror tiled ||| noBorders (fullscreenFull Full)
+myLayout = windowNavigation(tiled)||| Mirror tiled
 	where 
 	tiled = Tall nmaster delta ratio
 	nmaster = 1
@@ -46,8 +43,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 	,((modm,            xK_d     ),spawn "dmenu_run")
 	,((modm.|.shiftMask,xK_c     ),kill)
 	,((modm.|.shiftMask,xK_q     ),kill)
-	,((modm,            xK_f     ),sendMessage NextLayout)
-	--,((modm,            xK_f     ),sendMessage $ Toggle FULL) ---なぜかできない
+	,((modm.|.shiftMask,xK_l     ),spawn "xscreensaver-command --lock")
+	,((modm.|.shiftMask,xK_o     ),spawn "xscreensaver-command --lock;sleep 5;sudo pm-suspend")
+	,((modm.|.shiftMask,xK_p     ),spawn "sudo pm-suspend")
 	,((modm,            xK_n     ),refresh)
 	,((modm,            xK_t     ),withFocused $ windows . W.sink)
 	--Restart and Quit
@@ -57,7 +55,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 	--wallpaper change
 	,((modm,            xK_w     ),spawn "python /home/cocu/bin/bin-git/utils/wallpaper_change.py")
 	,((modm.|.shiftMask,xK_w     ),spawn "feh --bg-fill ~/picture/wallpaper/saya.jpg")
-
 
 	--move focus
 	,((modm,            xK_j     ),sendMessage $ Go D)
@@ -121,6 +118,6 @@ main = do
 	,mouseBindings = myMouseBindings
 	,focusFollowsMouse = False
 	--
-	,modMask = mod4Mask
+	,modMask = mod1Mask
 	}
 
