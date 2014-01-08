@@ -16,9 +16,11 @@ import qualified XMonad.StackSet as W
 import qualified Data.Map as M
 
 import XMonad.Hooks.SetWMName
+import XMonad.Layout.NoBorders
+import XMonad.Layout.Fullscreen
 
 --Layout
-myLayout = windowNavigation(tiled)||| Mirror tiled
+myLayout = windowNavigation(tiled)||| Mirror tiled ||| noBorders (fullscreenFull Full)
 	where 
 	tiled = Tall nmaster delta ratio
 	nmaster = 1
@@ -43,6 +45,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 	,((modm,            xK_d     ),spawn "dmenu_run")
 	,((modm.|.shiftMask,xK_c     ),kill)
 	,((modm.|.shiftMask,xK_q     ),kill)
+	,((modm,            xK_f     ),sendMessage NextLayout)
 	,((modm.|.shiftMask,xK_l     ),spawn "xscreensaver-command --lock")
 	,((modm.|.shiftMask,xK_o     ),spawn "xscreensaver-command --lock;sleep 5;sudo pm-suspend")
 	,((modm.|.shiftMask,xK_p     ),spawn "sudo pm-suspend")
@@ -52,8 +55,11 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 	,((modm.|.shiftMask,xK_r     ),spawn "xmonad --recompile; xmonad --restart")
 	,((modm.|.shiftMask,xK_Escape),io(exitWith ExitSuccess))
 
+	--xbacklight
+	,((modm,            xK_b     ),spawn "xbacklight -set 10")
+
 	--wallpaper change
-	,((modm,            xK_w     ),spawn "python /home/cocu/bin/bin-git/utils/wallpaper_change.py")
+	,((modm,            xK_w     ),spawn "python /home/cocu/bin/WallpaperChanger/wallpaperchanger.py")
 	,((modm.|.shiftMask,xK_w     ),spawn "feh --bg-fill ~/picture/wallpaper/saya.jpg")
 
 	--move focus
