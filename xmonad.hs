@@ -55,7 +55,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 	,((modm.|.shiftMask,xK_Escape),io(exitWith ExitSuccess))
 
 	--wallpaper change
-	,((modm,            xK_w     ),spawn "python /home/cocu/bin/bin-git/utils/wallpaper_change.py")
+	,((modm,            xK_w     ),spawn "python /home/cocu/bin/WallpaperChanger/wallpaperchanger.py")
 	,((modm.|.shiftMask,xK_w     ),spawn "feh --bg-fill ~/picture/wallpaper/saya.jpg")
 
 
