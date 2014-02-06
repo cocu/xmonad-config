@@ -43,6 +43,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 	,((modm,            xK_Return),spawn $ XMonad.terminal  conf)
 	,((modm,            xK_p     ),spawn "dmenu_run")
 	,((modm,            xK_d     ),spawn "dmenu_run")
+	,((modm,            xK_c     ),spawn "/home/cocu/bin/bin-git/utils/toggle_xcompmgr")
 	,((modm.|.shiftMask,xK_c     ),kill)
 	,((modm.|.shiftMask,xK_q     ),kill)
 	,((modm,            xK_f     ),sendMessage NextLayout)
