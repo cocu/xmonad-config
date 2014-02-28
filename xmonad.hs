@@ -57,6 +57,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 	--wallpaper change
 	,((modm,            xK_w     ),spawn "python /home/cocu/bin/WallpaperChanger/wallpaperchanger.py")
 	,((modm.|.shiftMask,xK_w     ),spawn "feh --bg-fill ~/picture/wallpaper/saya.jpg")
+	,((modm,            xK_m     ),spawn "python /home/cocu/bin/utils/minecraft-input_helper")
 
 
 	--move focus
@@ -72,9 +73,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 	--reset workspace
 	,((modm,            xK_r     ),do
 		screenWorkspace 1 >>= flip whenJust (windows . W.view)
-		(windows . W.greedyView) "0"
+		(windows . W.greedyView) "1"
 		screenWorkspace 0 >>= flip whenJust (windows . W.view)
-		(windows . W.greedyView) "1")
+		(windows . W.greedyView) "0")
 	--,((modm,            
 	--,((modm.|.shiftMask,
 	]
@@ -88,7 +89,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
 	--screen selecting
     	[((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
-        | (key, sc) <- zip [xK_bracketleft, xK_bracketright] [0..]
+        | (key, sc) <- zip [xK_bracketright, xK_bracketleft] [0..]
         , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
     	++
 	[((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
