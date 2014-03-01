@@ -72,10 +72,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 	,((modm,            xK_space ),windows W.swapMaster)
 	--reset workspace
 	,((modm,            xK_r     ),do
-		screenWorkspace 1 >>= flip whenJust (windows . W.view)
-		(windows . W.greedyView) "1"
 		screenWorkspace 0 >>= flip whenJust (windows . W.view)
-		(windows . W.greedyView) "0")
+		(windows . W.greedyView) "0"
+		screenWorkspace 1 >>= flip whenJust (windows . W.view)
+		(windows . W.greedyView) "1")
 	--,((modm,            
 	--,((modm.|.shiftMask,
 	]
