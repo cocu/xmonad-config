@@ -58,6 +58,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
 	--xbacklight
 	,((modm,            xK_b     ),spawn "xbacklight -set 10")
+	,((modm.|.shiftMask,xK_b     ),spawn "xbacklight -set 20")
 
 	--wallpaper change
 	,((modm,            xK_w     ),spawn "python /home/cocu/bin/WallpaperChanger/wallpaperchanger.py")
