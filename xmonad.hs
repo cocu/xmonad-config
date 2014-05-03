@@ -10,6 +10,7 @@ import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.DynamicLog
 
 import XMonad.Util.Run
+import XMonad.Util.Scratchpad
 import System.IO
 
 import qualified XMonad.StackSet as W
@@ -32,10 +33,19 @@ myWorkspaces = ["1","2","3","4","5","6","7","8","9","0"]
 
 --Workspace application attach
 myManageHook = composeAll
-	[className =? "mikutter" --> doShift "6"
+	([className =? "mikutter" --> doShift "6"
 	---
 	,className =? "Gimp" --> doFloat
-	]
+	])<+>manageScratchpad
+
+--ScratchPad
+manageScratchpad :: ManageHook
+manageScratchpad = scratchpadManageHook (W.RationalRect l t w h)
+	where
+	h = 0.1
+	w = 1
+	t = 1-h
+	l = 1-w
 
 --Keybinding
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
@@ -80,6 +90,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 		(windows . W.greedyView) "0"
 		screenWorkspace 0 >>= flip whenJust (windows . W.view)
 		(windows . W.greedyView) "1")
+	--scratchpad
+	,((modm,            xK_grave ),scratchpadSpawnAction defaultConfig {terminal = "urxvt"})
 	--,((modm,            
 	--,((modm.|.shiftMask,
 	]
