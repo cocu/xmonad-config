@@ -42,10 +42,10 @@ myManageHook = composeAll
 manageScratchpad :: ManageHook
 manageScratchpad = scratchpadManageHook (W.RationalRect l t w h)
 	where
-	h = 0.1
-	w = 1
-	t = 1-h
-	l = 1-w
+	h = 0.7
+	w = 0.7
+	t = (1-h)/2
+	l = (1-w)/2
 
 --Keybinding
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
