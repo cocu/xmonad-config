@@ -96,8 +96,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 		screenWorkspace 0 >>= flip whenJust (windows . W.view)
 		(windows . W.greedyView) "1")
 	--scratchpad
-	,((modm,            xK_grave ),namedScratchpadAction scratchpads "common")
-	,((modm,            xK_comma ),namedScratchpadAction scratchpads "htop")
+	,((modm,            xK_grave ),namedScratchpadAction scratchpads "htop")
+	,((modm,            xK_g     ),namedScratchpadAction scratchpads "common")
 --	,((modm,            xK_m     ),namedScratchpadAction scratchpads "cmus")
 	--,((modm,            
 	--,((modm.|.shiftMask,
@@ -145,6 +145,6 @@ main = do
 	,mouseBindings = myMouseBindings
 	,focusFollowsMouse = False
 	--
-	,modMask = mod1Mask
+	,modMask = mod4Mask
 	}
 
