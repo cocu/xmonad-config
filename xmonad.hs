@@ -49,6 +49,7 @@ centerScratchpadSize = W.RationalRect l t w h
 scratchpads = 
 	[NS "common" "urxvt -title common" (title =? "common") (customFloating $ centerScratchpadSize)
 	,NS "htop" "urxvt -e htop" (title =? "htop") (customFloating $ centerScratchpadSize)
+--	,NS "cmus" "urxvt -name cmus" (resource =? "cmus") (customFloating $ W.RationalRect 0.5 0 0.5 1)
 	]
 
 --Keybinding
@@ -97,6 +98,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 	--scratchpad
 	,((modm,            xK_grave ),namedScratchpadAction scratchpads "common")
 	,((modm,            xK_comma ),namedScratchpadAction scratchpads "htop")
+--	,((modm,            xK_m     ),namedScratchpadAction scratchpads "cmus")
 	--,((modm,            
 	--,((modm.|.shiftMask,
 	]
