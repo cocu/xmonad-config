@@ -10,7 +10,7 @@ import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.DynamicLog
 
 import XMonad.Util.Run
-import XMonad.Util.Scratchpad
+import XMonad.Util.NamedScratchpad
 import System.IO
 
 import qualified XMonad.StackSet as W
@@ -36,16 +36,20 @@ myManageHook = composeAll
 	([className =? "mikutter" --> doShift "6"
 	---
 	,className =? "Gimp" --> doFloat
-	])<+>manageScratchpad
+	])<+>namedScratchpadManageHook scratchpads
 
 --ScratchPad
-manageScratchpad :: ManageHook
-manageScratchpad = scratchpadManageHook (W.RationalRect l t w h)
+centerScratchpadSize = W.RationalRect l t w h 
 	where
 	h = 0.7
 	w = 0.7
 	t = (1-h)/2
 	l = (1-w)/2
+
+scratchpads = 
+	[NS "common" "urxvt -title common" (title =? "common") (customFloating $ centerScratchpadSize)
+	,NS "htop" "urxvt -e htop" (title =? "htop") (customFloating $ centerScratchpadSize)
+	]
 
 --Keybinding
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
@@ -91,7 +95,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 		screenWorkspace 0 >>= flip whenJust (windows . W.view)
 		(windows . W.greedyView) "1")
 	--scratchpad
-	,((modm,            xK_grave ),scratchpadSpawnAction defaultConfig {terminal = "urxvt"})
+	,((modm,            xK_grave ),namedScratchpadAction scratchpads "common")
+	,((modm,            xK_comma ),namedScratchpadAction scratchpads "htop")
 	--,((modm,            
 	--,((modm.|.shiftMask,
 	]
