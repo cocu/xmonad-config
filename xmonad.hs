@@ -10,6 +10,7 @@ import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.DynamicLog
 
 import XMonad.Util.Run
+import XMonad.Util.NamedScratchpad
 import System.IO
 
 import qualified XMonad.StackSet as W
@@ -32,9 +33,23 @@ myWorkspaces = ["1","2","3","4","5","6","7","8","9","0"]
 
 --Workspace application attach
 myManageHook = composeAll
-	[className =? "mikutter" --> doShift "6"
+	([className =? "mikutter" --> doShift "6"
 	---
 	,className =? "Gimp" --> doFloat
+	])<+>namedScratchpadManageHook scratchpads
+
+--ScratchPad
+centerScratchpadSize = W.RationalRect l t w h 
+	where
+	h = 0.7
+	w = 0.7
+	t = (1-h)/2
+	l = (1-w)/2
+
+scratchpads = 
+	[NS "common" "urxvt -title common" (title =? "common") (customFloating $ centerScratchpadSize)
+	,NS "htop" "urxvt -e htop" (title =? "htop") (customFloating $ centerScratchpadSize)
+--	,NS "cmus" "urxvt -name cmus" (resource =? "cmus") (customFloating $ W.RationalRect 0.5 0 0.5 1)
 	]
 
 --Keybinding
@@ -42,7 +57,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 	[((modm.|.shiftMask,xK_Return),spawn $ XMonad.terminal  conf)
 	,((modm,            xK_Return),spawn $ XMonad.terminal  conf)
 	,((modm,            xK_p     ),spawn "dmenu_run")
-	,((modm,            xK_d     ),spawn "dmenu_run")
+	,((modm,            xK_d     ),spawn "xboomx")
 	,((modm,            xK_c     ),spawn "/home/cocu/bin/bin-git/utils/toggle_xcompmgr")
 	,((modm.|.shiftMask,xK_c     ),kill)
 	,((modm.|.shiftMask,xK_q     ),kill)
@@ -58,6 +73,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
 	--xbacklight
 	,((modm,            xK_b     ),spawn "xbacklight -set 10")
+	,((modm.|.shiftMask,xK_b     ),spawn "xbacklight -set 20")
 
 	--wallpaper change
 	,((modm,            xK_w     ),spawn "python /home/cocu/bin/WallpaperChanger/wallpaperchanger.py")
@@ -79,6 +95,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 		(windows . W.greedyView) "0"
 		screenWorkspace 0 >>= flip whenJust (windows . W.view)
 		(windows . W.greedyView) "1")
+	--scratchpad
+	,((modm,            xK_grave ),namedScratchpadAction scratchpads "htop")
+	,((modm,            xK_g     ),namedScratchpadAction scratchpads "common")
+--	,((modm,            xK_m     ),namedScratchpadAction scratchpads "cmus")
 	--,((modm,            
 	--,((modm.|.shiftMask,
 	]
@@ -125,6 +145,6 @@ main = do
 	,mouseBindings = myMouseBindings
 	,focusFollowsMouse = False
 	--
-	,modMask = mod1Mask
+	,modMask = mod4Mask
 	}
 
