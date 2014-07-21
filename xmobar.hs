@@ -12,10 +12,11 @@ Config { font = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
                     , Run BatteryP ["BAT0"] ["-t","Batt:<acstatus><left>% <timeleft>","-L","30","-H","80","-p","3","-l","red","-h","green","--","-O"," ","-o","+"] 60
                     , Run Cpu ["-L","3","-H","50","--normal","green","--high","red"] 10
                     , Run Memory ["-t","Mem: <usedratio>%"] 10
+					, Run Swap [] 10
                     , Run Com "uname" ["-s","-r"] "" 36000
     		    , Run Date "%a %b %_d %Y %H:%M:%S" "date" 10
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%cpu% | %memory% | %wlan0% - %eth0% }{ <fc=#ee9a00>%date%</fc> | %battery% | %uname%"
+       , template = "%cpu% | %memory% * %swap% | %wlan0% - %eth0% }{ <fc=#ee9a00>%date%</fc> | %battery% | %uname%"
        }
