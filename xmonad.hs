@@ -99,6 +99,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 	,((modm,            xK_grave ),namedScratchpadAction scratchpads "htop")
 	,((modm,            xK_g     ),namedScratchpadAction scratchpads "common")
 --	,((modm,            xK_m     ),namedScratchpadAction scratchpads "cmus")
+	--screen shot 
+	,((modm,            xK_backslash),spawn "import hoge.jpg")
+	,((modm.|.shiftMask,xK_backslash),spawn "import -window root hoge.jpg")
 	--,((modm,            
 	--,((modm.|.shiftMask,
 	]
